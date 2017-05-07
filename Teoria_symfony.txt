@@ -1,0 +1,30 @@
+Kontroler jest klasą, zawierającą metody, zwane akcjami, które są odpowiedzialne za wygenerowanie obiektu Symfony o nazwie Response i zwrócenie go klientowi w postaci odpowiedzi HTTP.
+
+
+// src/AppBundle/Controller/LuckyController.php
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
+
+class LuckyController
+{
+    /**
+     * @Route("/lucky/number")
+     */
+    public function numberAction()
+    {
+        $number = rand(0, 100);
+
+        return new Response(
+            '<html><body>Lucky number: '.$number.'</body></html>'
+        );
+    }
+}
+
+
+@Route powyżej numberAction() nazywa się adnotacją i definiuje wzorzec ścieżki URL. Można również napisać trasy w YAML (lub innych formatach).
+
+Metoda poniżej adnotacji, numberAction, jest nazywana akcją i jest miejscem, w którym buduje się stronę. Jedyną zasadą jest to, że akcja musi zwrócić obiekt Response.
+
+Obiekt Response zwracany przez kontroler może zawierać kod HTML, JSON oraz nawet plik binarny, taki jak obraz lub PDF. Można łatwo ustawić nagłówki HTTP lub kod stanów.
