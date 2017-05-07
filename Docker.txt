@@ -1,0 +1,52 @@
+https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description
+
+https://docs.docker.com/engine/installation/linux/ubuntu/#install-from-a-package
+
+
+$sudo systemctl enable docker    // serwer startuje przy każdym uruchomieniu systemu
+
+$ docker network ls
+
+$ docker network create -d bridge my_bridge // tworzenie własnej sieci mostów
+
+//Learn Docker in 12 Minutes - tworzenie obrazu pliku ( dla php)
+//Polecenie urachmiam w folderze z plikiem, musi byc tam plik dockerfile , -t nazwa - nadaje przyjazną nazwe
+docker build -t hello-world .
+
+//uruchomienie 
+docker run -p 80:80 hello-world
+
+//uruchomienie ale z mozliwością modyfikacji w pliku index.php i po odświeżeniu //localhost zmieni się wyświetlana zawartość
+docker run -p 80:80 -v /home/hubert/Pulpit/docker/src/:/var/www/html hello-world
+
+
+
+
+The following Dockerfile shows using the ENTRYPOINT to run Apache in the foreground (i.e., as PID 1):
+
+FROM debian:stable
+RUN apt-get update && apt-get install -y --force-yes apache2
+EXPOSE 80 443
+VOLUME ["/var/www", "/var/log/apache2", "/etc/apache2"]
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+
+
+
+docker build -t friendlyname .  # Create image using this directory's Dockerfile
+docker run -p 4000:80 friendlyname  # Run "friendlyname" mapping port 4000 to 80
+docker run -d -p 4000:80 friendlyname         # Same thing, but in detached mode
+docker ps                                 # See a list of all running containers
+docker stop <hash>                     # Gracefully stop the specified container
+docker ps -a           # See a list of all containers, even the ones not running
+docker kill <hash>                   # Force shutdown of the specified container
+docker rm <hash>              # Remove the specified container from this machine
+docker rm $(docker ps -a -q)           # Remove all containers from this machine
+docker images -a                               # Show all images on this machine
+docker rmi <imagename>            # Remove the specified image from this machine
+docker rmi $(docker images -q)             # Remove all images from this machine
+docker login             # Log in this CLI session using your Docker credentials
+docker tag <image> username/repository:tag  # Tag <image> for upload to registry
+docker push username/repository:tag            # Upload tagged image to registry
+docker run username/repository:tag                   # Run image from a registry
+
